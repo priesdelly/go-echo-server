@@ -37,14 +37,14 @@ go mod download
 ```
 Build the application:
 ```bash
-go build -o main
+go build -o app
 ```
 
 ## Running the Application:
 
 Execute the built binary:
 ```bash
-./main
+./app
 ```
 **Example Usage:**
 ```bash
