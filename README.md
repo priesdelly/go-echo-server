@@ -25,11 +25,11 @@ Go version 1.22 or later (instructions on installing Go can be found at https://
 
 Clone this repository:
 ``` bash
-git clone https://github.com/priesdelly/req-res.git
+git clone https://github.com/priesdelly/go-echo-server.git
 ```
 Navigate to the project directory:
 ``` bash
-cd req-res
+cd go-echo-server
 ```
 Run go mod download to download dependencies:
 ```bash
