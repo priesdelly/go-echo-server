@@ -15,7 +15,7 @@ type HTTPRequestDetails struct {
 }
 
 func main() {
-	log.Println("Start App")
+	log.Println("== Start App ==")
 	http.HandleFunc("/", rootRouteHandler)
 
 	log.Println("Server listening on port 8080")
@@ -25,7 +25,7 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	log.Println("End App")
+	log.Println("== End App ==")
 }
 
 func rootRouteHandler(w http.ResponseWriter, r *http.Request) {
@@ -35,6 +35,8 @@ func rootRouteHandler(w http.ResponseWriter, r *http.Request) {
 		URL:    r.URL.String(),
 		Header: r.Header,
 	}
+
+	log.Printf("Got request for %s with path %s\n", details.Method, details.URL)
 
 	// Read request body
 	body, err := io.ReadAll(r.Body)
@@ -63,6 +65,7 @@ func rootRouteHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	if _, err := w.Write(jsonData); err != nil {
 		log.Println("Error writing JSON response:", err)
+
 		// Consider returning a more specific error code depending on the nature of the write error
 		http.Error(w, "Error writing response", http.StatusInternalServerError)
 		return
