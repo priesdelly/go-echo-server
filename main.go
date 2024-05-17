@@ -5,11 +5,13 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"strconv"
+	"time"
 )
 
 type HTTPRequestDetails struct {
 	Method string              `json:"method"`
-	URL    string              `json:"url"`
+	Path   string              `json:"path"`
 	Header map[string][]string `json:"header"`
 	Body   string              `json:"body"`
 }
@@ -32,11 +34,24 @@ func rootRouteHandler(w http.ResponseWriter, r *http.Request) {
 	// Extract request details
 	details := HTTPRequestDetails{
 		Method: r.Method,
-		URL:    r.URL.String(),
+		Path:   r.URL.String(),
 		Header: r.Header,
 	}
 
-	log.Printf("Got request for %s with path %s\n", details.Method, details.URL)
+	log.Printf("Got request for %s with path %s\n", details.Method, details.Path)
+
+	sleepParam := r.URL.Query().Get("sleep")
+	if sleepParam != "" {
+		log.Printf("Sleeping for %s\n", sleepParam)
+		// Sleep for the specified duration
+		sleepTime, err := strconv.Atoi(sleepParam)
+		if err != nil {
+			log.Println("Error parsing sleep duration:", err)
+			http.Error(w, "Error parsing sleep duration", http.StatusBadRequest)
+			return
+		}
+		time.Sleep(time.Duration(sleepTime) * time.Millisecond)
+	}
 
 	// Read request body
 	body, err := io.ReadAll(r.Body)
