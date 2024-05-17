@@ -29,7 +29,7 @@ git clone https://github.com/priesdelly/req-res.git
 ```
 Navigate to the project directory:
 ``` bash
-cd your-project-name
+cd req-res
 ```
 Run go mod download to download dependencies:
 ```bash
