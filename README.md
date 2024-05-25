@@ -5,6 +5,9 @@ This is a simple Go application that demonstrates how to create an HTTP server t
 
 - Handles all HTTP methods (GET, POST, PUT, etc.)
 - Uses only native Go libraries for dependencies
+- GET Param (like http://localhost:8080/test1/test2?sleep=1000&status=202)
+  - status - return with HTTP code
+  - sleep - sleep response in ms (eg. 1000)
 
 **Running the Application:**
 
