@@ -1,5 +1,5 @@
 # REQ-RES - Go HTTP Request Echo Server
-This is a simple Go application that demonstrates how to create an HTTP server that echoes back the request details (method, URL, headers, and body) in JSON format.
+This simple Go application demonstrates how to create an HTTP server that echoes back the request details (method, URL, headers, and body) in JSON format.
 
 **Features:**
 
@@ -54,9 +54,9 @@ Execute the built binary:
 curl --location 'http://localhost:8080/call/req-res'
 ```
 
-**License:**
+## License
 
-This application is distributed under the terms of the [BSD-3-Clause License](https://opensource.org/licenses/BSD-3-Clause).  For more information, see the LICENSE file.
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
 Author(s):
 - [Priesdelly](https://github.com/priesdelly)
