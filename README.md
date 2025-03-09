@@ -1,4 +1,4 @@
-# REQ-RES - Go HTTP Request Echo Server
+# Go HTTP Request Echo Server (Request -> Response)
 This simple Go application demonstrates how to create an HTTP server that echoes back the request details (method, URL, headers, and body) in JSON format.
 
 **Features:**
