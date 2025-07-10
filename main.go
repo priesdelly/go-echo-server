@@ -3,11 +3,15 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"io"
 	"log"
 	"net/http"
+	"os"
+	"os/signal"
 	"strconv"
+	"syscall"
 	"time"
 )
 
@@ -21,13 +25,42 @@ type HTTPRequestDetails struct {
 func main() {
 	log.Println("== Start App ==")
 
+	// Create a new HTTP server
+	srv := &http.Server{
+		Addr: ":8080",
+	}
+
+	// Define HTTP handlers
 	http.HandleFunc("/", rootRouteHandler)
 
-	log.Println("Server listening on port 8080")
-	err := http.ListenAndServe(":8080", nil)
-	if err != nil {
-		log.Fatalln(err)
+	// Channel to listen for interrupt signals
+	stop := make(chan os.Signal, 1)
+	signal.Notify(stop, os.Interrupt, syscall.SIGTERM)
+
+	// Run the server in a goroutine
+	go func() {
+		if err := srv.ListenAndServe(); err != nil {
+			if err != http.ErrServerClosed {
+				log.Fatalf("Could not listen on %s: %v\n", srv.Addr, err)
+			}
+		}
+	}()
+	log.Printf("Server is ready to handle requests at %s", srv.Addr)
+
+	// Block until a signal is receivede
+	<-stop
+	log.Printf("Server is shutting down...")
+
+	// Create a deadline to wait for
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	// Attempt a graceful shutdown
+	if err := srv.Shutdown(ctx); err != nil {
+		log.Fatalf("Server forced to shutdown: %v", err)
 	}
+
+	log.Printf("Server exiting")
 
 	log.Println("== End App ==")
 }
