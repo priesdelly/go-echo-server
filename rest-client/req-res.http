@@ -1,0 +1,30 @@
+@hostname = localhost
+@port = 8080
+@host = {{hostname}}:{{port}}
+@contentType = application/jsos
+
+
+GET http://{{host}}/call/req-res  HTTP/1.1
+User-Agent: rest-client
+Accept-Language: en-GB,en-US;
+content-type: {{contentType}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6
+
+{
+    "name": "sample",
+    "time": "Wed, 21 Oct 2015 18:27:50 GMT"
+}
+
+###
+
+GET http://{{host}}/call/req-res  HTTP/1.1
+User-Agent: rest-client
+Accept-Language: en-GB,en-US;
+content-type: {{contentType}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6
+
+{
+    "name": "foo",
+    "surname": "bar"
+
+}
